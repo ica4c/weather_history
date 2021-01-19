@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "ce9e6b09-7b9e-43de-a111-e169aded8e20",
+		"name": "Weather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "V1",
+			"item": [
+				{
+					"name": "Get by date",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"jsonrpc\": \"2.0\", \"method\": \"weather.getByDate\", \"params\": {\"date\": \"2021-01-19\"}, \"id\": \"1\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/v1/rpc",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rpc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get for last days",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"jsonrpc\": \"2.0\", \"method\": \"weather.getHistory\", \"params\": {\"lastDays\": \"15\"}, \"id\": \"1\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/v1/rpc",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rpc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
