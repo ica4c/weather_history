@@ -62,3 +62,4 @@ networks:
   private:
   brokerage:
   public:
+    name: weather_history
