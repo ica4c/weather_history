@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+
+  # ------------------------------
+  # Public containers
+  # ------------------------------
+  nginx:
+    build: ./nginx
+    env_file: .env
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - public
+      - brokerage
+    volumes:
+      - ../src:/app/
+      - ./shared/logs:/tmp/logs/
+
+  # ------------------------------
+  # Brokerage containers
+  # ------------------------------
+  php:
+    build:
+      context: ./php
+      dockerfile: Dockerfile.debug
+    env_file: .env
+    volumes:
+      - ../src:/app/
+      - ./shared/data/php/xdebug:/tmp/xdebug
+      - ./shared/logs:/tmp/logs/
+    ports:
+      - "9000:9000"
+    networks:
+      - brokerage
+      - private
+
+  # ------------------------------
+  # Private containers
+  # ------------------------------
+  redis:
+    image: redis:latest
+    restart: always
+    env_file: .env
+    command: redis-server --requirepass "${REDIS_PASSWORD}"
+    networks:
+      - private
+    volumes:
+      - ./shared/data/redis:/data
+
+  postgresql:
+    image: postgres:latest
+    restart: always
+    env_file: .env
+    networks:
+      - private
+    volumes:
+      - ./shared/data/postgres:/var/lib/postgresql/data
+
+networks:
+  private:
+  brokerage:
+  public:

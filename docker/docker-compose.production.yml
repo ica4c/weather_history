@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+
+  # ------------------------------
+  # Brokerage containers
+  # ------------------------------
+  php:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ../src:/app/
+      - ./shared/logs:/tmp/logs/
+
+  # ------------------------------
+  # Private containers
+  # ------------------------------
+
+networks:
+  private:
+  brokerage:
+  public:
