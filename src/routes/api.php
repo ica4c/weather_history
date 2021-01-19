@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Procedures\V1\Util\UtilProcedure;
+use App\Http\Procedures\V1\Weather\WeatherQueryProcedure;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group(
+/**
+ * @param \Illuminate\Routing\Router $router
+ */ [
+        'prefix' => 'v1',
+        'namespace' => 'V1',
+        'as' => 'v1.',
+    ],
+    static function(Router $router) {
+        $router->rpc('rpc', [UtilProcedure::class, WeatherQueryProcedure::class])->name('rpc');
+    }
+);
